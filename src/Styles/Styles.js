@@ -48,6 +48,7 @@ margin-bottom:100px;
 export const TaskTittle = styled.div`
 flex: 7;
 flexDirection: column;
+text-align: left;
 overflow: auto;
 `;
 
