@@ -1,25 +1,44 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
-import './App.css';
+import sincron, { addItem } from './Store/controladorAlmacen'
+import RenderItemsToDo from './Items/RenderItemsToDo'
+import { AppDiv, App_header, App_logo, TaskCard, Button, Input } from './Styles/Styles';
 
-function App() {
+const App = () => {
+
+  const [itemsArray, setItems] = useState([])
+  const [newTextData, setTextData] = useState("")
+
+  useEffect(() => {
+    sincron(setItems)
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <AppDiv >
+      <App_header >
+        <App_logo src={logo} alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          A React project.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+        Redux storage.
+        <TaskCard>
+          <p>
+            Next Activity
+          </p>
+          <Input
+            type="text"
+            value={newTextData}
+            placeholder="..."
+            onFocus={()=>setTextData("")}
+            onChange={e => setTextData(e.target.value)} >
+          </Input>
+          <Button
+            onClick={() => addItem(newTextData)}
+          >Add</Button>
+        </TaskCard>
+        <RenderItemsToDo itemsArray={itemsArray} />
+      </App_header>
+    </AppDiv>
   );
 }
 
